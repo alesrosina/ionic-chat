@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Contact
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="newContact()">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-searchbar (ionInput)="findContact($event)" placeholder="Search"></ion-searchbar>
+  <ion-list>
+    <ion-item *ngFor="let item of allContacts" (click)="startChat(item)">
+      {{ item.name.formatted }}
+    </ion-item>
+  </ion-list>
+</ion-content>
