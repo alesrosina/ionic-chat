@@ -54,7 +54,6 @@ export class SettingsPage {
 
   public saveUser() {
     if(!this.phoneNumber) {
-      console.log("phoneNumber is empty");
       return;
     }
     let loading = this.loadingCtrl.create({ content: 'Loading ...' });
@@ -65,7 +64,6 @@ export class SettingsPage {
         let newUserData = { user: { phone: this.phoneNumber } };
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
-        console.log("starting new user creation ...");
         this.http.post(`${this.appSettings.serverUrl}users`, newUserData, { headers: headers }).map(res => res.json()).subscribe(data => {
           this.appPreferences.store('app', 'user', data);
           this.settingsData = data;
@@ -76,7 +74,6 @@ export class SettingsPage {
         this.settingsData = data;
       }
       loading.dismiss();
-      console.log(this.navParams.data);
       if(this.isModal) {
         this.viewCtrl.dismiss();
       }
