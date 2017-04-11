@@ -14,6 +14,33 @@
 
 
 <ion-content padding>
-  <h1>Settings</h1>
+
+  <div *ngIf="settingsData">
+    <p>Your current phone number is</p>
+    <h2>{{ phoneNumber }}</h2>
+    <p>You have registered on:<br><b>{{ settingsData.created_at | date: 'dd.MM.yyyy' }}</b></p>
+    <p>If you want to change your number, you must first delete your account *:</p>
+    <p>
+      <button color="danger" ion-button block (click)="deleteSettings()" [disabled]="!phoneNumber">Delete account</button>
+    </p>
+    <p>
+      <small>
+        * Deleting your account will not remove any converstaion stored on server. If you setup account with same
+        phone number, all your history will reaper. Not been able to remove your settings is sooo popular right now ;)
+      </small>
+    </p>
+
+  </div>
+
+  <div *ngIf="!settingsData">
+    <h2>Hello!</h2>
+    <p>Please enter your phone number bellow, so you will be able to chat with others.</p>
+    <div>
+      <ion-input type="tel" [value]="phoneNumber" [(ngModel)]="phoneNumber" placeholder="eg. +41781234567"></ion-input>
+    </div>
+    <p>
+      <button ion-button block (click)="saveUser()" [disabled]="!phoneNumber">Save</button>
+    </p>
+  </div>
 
 </ion-content>
