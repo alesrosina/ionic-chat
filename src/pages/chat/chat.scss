@@ -1,0 +1,62 @@
+//@import '../../theme/variables';
+
+page-chat {
+  .text-input {
+    background-color: white;
+    margin: 0 0 0 10px;
+    height: 30px;
+    border-radius: 15px;
+    padding: 0 15px;
+  }
+
+  .card-content {
+    padding-bottom: 0;
+  }
+
+  .card {
+    position: relative;
+    box-shadow: none;
+    overflow: visible;
+    border-radius: 10px;
+    border: 0;
+    background-color: #f4f4f4;
+
+    &:before {
+      position: absolute;
+      top: 15px;
+      left: -6px;
+      content: '';
+      width: 0;
+      height: 0;
+      border-top: 6px solid transparent;
+      border-bottom: 6px solid transparent;
+      border-right:6px solid #f4f4f4;
+    }
+
+    &.blue {
+      color: white;
+      background-color: #387ef5;
+
+      &:before {
+        display: none;
+      }
+
+      &:after {
+        position: absolute;
+        top: 15px;
+        right: -6px;
+        content: '';
+        width: 0;
+        height: 0;
+        border-top: 6px solid transparent;
+        border-bottom: 6px solid transparent;
+
+        border-left: 6px solid #387ef5;
+      }
+
+      .note {
+        color: white;
+      }
+    }
+  }
+}
