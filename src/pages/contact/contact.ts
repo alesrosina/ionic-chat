@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 
 import { NavController } from 'ionic-angular';
-import { Contacts, ContactFieldType, ContactFindOptions, Contact } from '@ionic-native/contacts';
+import { Contacts, ContactFieldType, ContactFindOptions, Contact, ContactName, ContactField } from '@ionic-native/contacts';
 import { AlertController } from 'ionic-angular';
+import {ChatPage} from "../chat/chat";
 
 @Component({
   selector: 'page-contact',
@@ -10,51 +11,74 @@ import { AlertController } from 'ionic-angular';
 })
 export class ContactPage {
 
-  public allContacts;
+  public allContacts: any[] = [];
+  public chatPage = ChatPage;
 
   constructor(public navCtrl: NavController, private contacts: Contacts, public alertCtrl: AlertController) {
 
   }
 
   public ionViewDidLoad() {
-    this.contacts.find(['name', 'emails', 'phoneNumbers'], {multiple: true}).then((contacts) => {
-      this.allContacts = contacts;
-    });
+    this.findContact(null);
   }
 
   public findContact(ev:any) {
-    let fields: ContactFieldType[] = ['name', 'emails'];
+    let fields: ContactFieldType[] = ['name', 'emails', 'phoneNumbers'];
 
     const options = new ContactFindOptions();
-    options.filter = ev.target.value;
+    if(ev !== null) {
+      options.filter = ev.target.value;
+    }
     options.multiple = true;
-    options.hasPhoneNumber = true;
+    options.desiredFields = fields;
 
     this.contacts.find(fields, options).then((contacts) => {
       this.allContacts = contacts;
     });
 
     if(this.allContacts.length == 0){
-      this.allContacts.push({displayName: 'No Contacts found'});
+      this.allContacts.push({ name: { formatted: 'No Contacts found' } });
     }
   }
 
   public newContact() {
+    // this.navCtrl.push(this.chatPage);
     this.showAlert('Not yet', 'This is not yet impemented.');
     // let contact: Contact = this.contacts.create();
     //
     // contact.name = new ContactName(null, 'Smith', 'John');
     // contact.phoneNumbers = [new ContactField('mobile', '6471234567')];
+    // let contact = {name: {formatted: "Lojze Novak"}};
+    // this.allContacts.push(contact);
+
     // contact.save().then(
     //   () => console.log('Contact saved!', contact),
     //   (error: any) => console.error('Error saving contact.', error)
     // );
   }
 
+  public contactIsRegistered(item:any) {
+    // let loading = this.loadingCtrl.create({ content: 'Loading ...' });
+    // loading.present();
+    // this.platform.ready().then(() => {
+    //   this.appPreferences.fetch('app', 'user').then((res) => {
+    //     if (res) {
+    //       this.settingsData = res;
+    //       this.http.get(`${this.appSettings.serverUrl}users/${this.settingsData.id}/users`).map(res => res.json()).subscribe(data => {
+    //         this.allChats = data;
+    //       });
+    //     }
+    //     loading.dismiss();
+    //   });
+    // });
+
+    return false;
+  }
+
   public startChat(contact:Contact) {
     let resp: string = '';
 
-    for(let item of contact.emails) {
+    for(let item of contact.phoneNumbers) {
       resp += `${item.type} (${item.pref}): ${item.value}<br>`
     }
 

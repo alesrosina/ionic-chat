@@ -8,12 +8,19 @@
 
   <ion-navbar>
     <ion-title>Chats</ion-title>
+    <!--<ion-buttons end>-->
+      <!--<button ion-button icon-only (click)="newChat()">-->
+        <!--<ion-icon name="add"></ion-icon>-->
+      <!--</button>-->
+    <!--</ion-buttons>-->
   </ion-navbar>
-
 </ion-header>
 
 
-<ion-content padding>
-  <h1>oh yeah</h1>
-
+<ion-content>
+  <ion-list>
+    <button ion-item *ngFor="let item of allChats" [navPush]="chatPage" [navParams]="item">
+      {{ item.phone }}
+    </button>
+  </ion-list>
 </ion-content>
